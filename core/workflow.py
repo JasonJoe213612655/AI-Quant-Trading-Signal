@@ -6,6 +6,7 @@ import logging
 from datetime import datetime, timedelta
 from core.agents.function_call_agent import function_call_agent
 from core.tools.strategy_generation import generate_strategy
+from core.tools.backtest import quant_analysis
 import json
 
 # Configure logging
@@ -139,18 +140,12 @@ def quant_analysis_node(state: WorkflowState) -> WorkflowState:
             raise ValueError("Asset code not obtained")
         if state.get('trading_strategy') is None:
             logger.error("Trading strategy not obtained")
-            raise ValueError("Trading strategy not obtained")
-            
-        # 打印 trading_strategy 的内容
-        logger.info(f"Trading strategy content: {json.dumps(state['trading_strategy'], indent=2, ensure_ascii=False)}")
-            
-        # 运行量化分析
-        result = function_call_agent.run({
-            "input": {
-                "symbol": state["symbol"],
-                "strategy": state["trading_strategy"]
-            }
-        })
+            raise ValueError("Trading strategy not obtained")           
+        # 直接调用 quant_analysis 函数
+        result = quant_analysis(
+            symbol=state["symbol"],
+            strategy=state["trading_strategy"]
+        )
         
         if result is None:
             logger.error("Quantitative analysis failed")

@@ -124,23 +124,23 @@ const Report: React.FC = () => {
 
         <Card style={{ marginBottom: 24 }}>
           <ReactECharts option={{
-            title: {
+    title: {
               text: `${symbol} Trading Signal Analysis`
-            },
-            tooltip: {
-              trigger: 'axis'
-            },
-            xAxis: {
-              type: 'category',
-              data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-            },
-            yAxis: {
-              type: 'value'
-            },
-            series: [{
-              data: [820, 932, 901, 934, 1290, 1330, 1320],
-              type: 'line'
-            }]
+    },
+    tooltip: {
+      trigger: 'axis'
+    },
+    xAxis: {
+      type: 'category',
+      data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
+    },
+    yAxis: {
+      type: 'value'
+    },
+    series: [{
+      data: [820, 932, 901, 934, 1290, 1330, 1320],
+      type: 'line'
+    }]
           }} />
         </Card>
 
@@ -263,18 +263,18 @@ const Report: React.FC = () => {
               </List.Item>
             )}
           />
-        </Card>
+      </Card>
 
         {/* 报告内容 */}
         <div style={{ flex: 1 }}>
           {selectedReport ? (
             renderReportContent(selectedReport)
           ) : (
-            <Card>
+      <Card>
               <Paragraph>
                 Please select a report from the history to view its details.
               </Paragraph>
-            </Card>
+      </Card>
           )}
         </div>
       </div>

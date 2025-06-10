@@ -5,4 +5,8 @@ ta-lib>=0.4.0
 python-dotenv>=0.19.0
 openai>=1.0.0
 matplotlib>=3.5.0
-seaborn>=0.11.0 
+seaborn>=0.11.0
+backtrader==1.9.78.123
+langchain>=0.1.0
+langchain-openai>=0.1.0
+langgraph>=0.1.0 

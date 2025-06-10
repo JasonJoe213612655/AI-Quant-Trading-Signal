@@ -216,174 +216,97 @@ STRATEGY_PARAMS = {
     }
 } 
 
-# Indicator metadata definition
-INDICATOR_META = {
-    # === Trend class =========================================================
-    "SMA": {
-        "desc": "Simple Moving Average, non-weighted average of the last n periods",
-        "fields": ["SMA"],                                # Example of generating column names: SMA_50
-        "param_space": {"period": [10, 20, 50, 100, 200]},
-        "rule": [
-            {
-                "type": "entry",
-                "expr": "SMA > close and CrossOver(SMA, close) > 0"
+# strategy configuration
+STRATEGY_CONFIG = [
+    # 1. Trend Breakout Strategy
+    {
+        "name": "Trend Breakout Strategy",
+        "indicators": ["SMA", "ADX"],
+        "params": {
+            "SMA": {
+                "period": 50
             },
-            {
-                "type": "exit",
-                "expr": "SMA < close and CrossOver(SMA, close) < 0"
+            "ADX": {
+                "period": 14
             }
-        ]
-    },
-    "EMA": {
-        "desc": "Exponential Moving Average, more sensitive to new prices",
-        "fields": ["EMA", "SMA"],
-        "param_space": {"period": [5, 10, 21, 55, 89]},
-        "rule": [
-            {
-                "type": "entry",
-                "expr": "EMA > close and CrossOver(EMA, close) > 0"
-            },
-            {
-                "type": "exit",
-                "expr": "EMA < close and CrossOver(EMA, close) < 0"
-            }
-        ]
-    },
-    "MACD": {
-        "desc": "The difference between the fast and slow EMA, to judge the bullish and bearish momentum",
-        "fields": ["MACD", "MACD_SIGNAL", "MACD_HIST"],
-        "param_space": {
-            "period_me1": [8, 12, 20],
-            "period_me2": [18, 26, 40],
-            "period_signal": [6, 9, 12]
         },
         "rule": [
             {
                 "type": "entry",
-                "expr": "MACD > MACD_SIGNAL and CrossOver(MACD, MACD_SIGNAL) > 0"
+                "expr": "CrossOver_SMA > 0 and ADX > 25"
             },
             {
                 "type": "exit",
-                "expr": "MACD < MACD_SIGNAL and CrossOver(MACD, MACD_SIGNAL) < 0"
-            }         
+                "expr": "CrossOver_SMA < 0 or ADX < 20"
+            }
         ]
     },
-    "ADX": {
-        "desc": "Average Directional Index, measures trend strength",
-        "fields": ["ADX", "ADX_PLUS", "ADX_MINUS"],
-        "param_space": {
-            "period": [14, 21, 28]
+    # 2. Momentum Pullback Strategy
+    {
+        "name": "Momentum Pullback Strategy",
+        "indicators": ["RSI", "EMA"],
+        "params": {
+            "RSI": {
+                "period": 14
+            },
+            "EMA": {
+                "period": 21
+            }
         },
         "rule": [
             {
                 "type": "entry",
-                "expr": "ADX > 25 and ADX_PLUS > ADX_MINUS"
+                "expr": "RSI < 30 and CrossOver_EMA > 0"
             },
             {
                 "type": "exit",
-                "expr": "ADX < 25 and ADX_PLUS < ADX_MINUS"
+                "expr": "RSI > 70 or CrossOver_EMA < 0"
+            }
+        ]
+    },
+    # 3. MACD Crossover Strategy
+    {
+        "name": "MACD Crossover Strategy",
+        "indicators": ["MACD"],
+        "params": {
+            "MACD": {
+                "period_me1": 12,    # 快速移动平均周期
+                "period_me2": 26,    # 慢速移动平均周期
+                "period_signal": 9   # 信号线周期
+            }
+        },
+        "rule": [
+            {
+                "type": "entry",
+                "expr": "CrossOver_MACD > 0"
+            },
+            {
+                "type": "exit",
+                "expr": "CrossOver_MACD < 0"
+            }
+        ]
+    },
+    # 4. Moving Average Crossover Strategy
+    {
+        "name": "Moving Average Crossover Strategy",
+        "indicators": ["SMA", "EMA"],
+        "params": {
+            "SMA": {
+                "period": 50
+            },
+            "EMA": {
+                "period": 20
+            }
+        },
+        "rule": [
+            {
+                "type": "entry",
+                "expr": "CrossOver_EMA > 0"
+            },
+            {
+                "type": "exit",
+                "expr": "CrossOver_EMA < 0"
             }
         ]
     }
-
-    # # === Oscillation / Reversal class ================================================
-    # "RSI": {
-    #     "desc": "Relative Strength Index, <30 is oversold, >70 is overbought",
-    #     "fields": ["RSI"],
-    #     "param_space": {
-    #         "period": [7, 14, 21],
-    #         "movav": ["Simple", "Exponential"],
-    #         "safediv": [True],
-    #         "safehigh": [100.0],
-    #         "safelow": [50.0]
-    #     },
-    #     "rule": [
-    #         "RSI < 30",                            # Oversold
-    #         "RSI > 70"                             # Overbought
-    #     ]
-    # },
-
-    # "STOCH": {
-    #     "desc": "Stochastic Oscillator, measures momentum",
-    #     "fields": ["percK", "percD"],
-    #     "param_space": {
-    #         "period": [9, 14, 21],
-    #         "period_dfast": [3, 5],
-    #         "period_dslow": [3, 5],
-    #         "movav": ["Simple", "Exponential"],
-    #         "upperband": [80.0],
-    #         "lowerband": [20.0]
-    #     },
-    #     "rule": [
-    #         "percK < lowerband",                        # Oversold
-    #         "percK > upperband",                        # Overbought
-    #         "percK_crosses_above_percD"                 # Bullish cross
-    #     ]
-    # }
-
-#     # === Statistical volatility / Channel class ============================================
-#     "ATR": {
-#         "desc": "Average True Range, measures volatility",
-#         "fields": ["ATR"],
-#         "param_space": {
-#             "period": [7, 14, 21],
-#             "movav": ["Smoothed"]
-#         },
-#         "rule": [
-#             "ATR > ATR[1]",                              # Increasing volatility
-#             "ATR < ATR[1]"                               # Decreasing volatility
-#         ]
-#     },
-
-#     "BBANDS": {
-#         "desc": "Bollinger Bands, measures price volatility",
-#         "fields": ["BB_TOP", "BB_MID", "BB_BOT"],
-#         "param_space": {
-#             "period": [10, 20, 50],
-#             "devfactor": [2.0, 2.5, 3.0],
-#             "movav": ["Simple"]
-#         },
-#         "rule": [
-#             "close > BB_TOP",                            # Overbought
-#             "close < BB_BOT"                             # Oversold
-#         ]
-#     },
-
-#     "DONCHIAN": {
-#         "desc": "Donchian Channel, high and low breakout",
-#         "fields": ["DONCHIAN_HIGH", "DONCHIAN_LOW"],
-#         "param_space": {
-#             "period": [10, 20, 55]
-#         },
-#         "rule": [
-#             "close > DONCHIAN_HIGH",                     # Bullish breakout
-#             "close < DONCHIAN_LOW"                       # Bearish breakout
-#         ]
-#     },
-
-#     # === Momentum / Rate of change ===============================================
-#     "ROC": {
-#         "desc": "Rate of Change, measures momentum",
-#         "fields": ["ROC"],
-#         "param_space": {
-#             "period": [10, 14, 21]
-#         },
-#         "rule": [
-#             "ROC > 0",                                   # Upward momentum
-#             "ROC < 0"                                    # Downward momentum
-#         ]
-#     }
-}
-
-# Strategy configuration schema definition
-STRAT_SCHEMA = {
-        "type": "object",
-        "required": ["name", "indicators", "params", "rule"],
-        "properties": {
-            "name": {"type": "string"},
-            "indicators": {"type": "array", "items": {"type": "string"}},
-            "params": {"type": "object"},
-            "rule": {"type": "string"}
-
-    }
-}
+]

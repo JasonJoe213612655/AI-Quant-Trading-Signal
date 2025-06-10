@@ -58,79 +58,100 @@ def calculate_indicators(data: pd.DataFrame) -> pd.DataFrame:
     :return: DataFrame with added technical indicators
     """
     try:
-        # Ensure data column names are uppercase
-        data.columns = [col.upper() for col in data.columns]
+        # 将时间索引转换为列（如果已经是列则跳过）
+        if 'Date' in data.columns:
+            data = data.rename(columns={'Date': 'datetime'})
+        elif data.index.name == 'Date':
+            data = data.reset_index()
+            data = data.rename(columns={'Date': 'datetime'})
+        
+        # 确保datetime列的数据类型正确
+        data['datetime'] = pd.to_datetime(data['datetime'])
+        
+        # 确保数据列名小写
+        column_mapping = {
+            'datetime': 'datetime',  # 保持datetime列名不变
+            'Open': 'open',
+            'High': 'high',
+            'Low': 'low',
+            'Close': 'close',
+            'Volume': 'volume',
+            'Dividends': 'dividends',
+            'Stock_Splits': 'stock_splits'
+        }
+        
+        # 只重命名存在的列
+        existing_columns = [col for col in column_mapping.keys() if col in data.columns]
+        data = data.rename(columns={col: column_mapping[col] for col in existing_columns})
         
         # Calculate moving average lines
-        data['SMA_5'] = talib.SMA(data['CLOSE'], timeperiod=5)
-        data['SMA_10'] = talib.SMA(data['CLOSE'], timeperiod=10)
-        data['SMA_20'] = talib.SMA(data['CLOSE'], timeperiod=20)
-        data['SMA_50'] = talib.SMA(data['CLOSE'], timeperiod=50)
-        data['SMA_200'] = talib.SMA(data['CLOSE'], timeperiod=200)
+        data['SMA_5'] = talib.SMA(data['close'], timeperiod=5)
+        data['SMA_10'] = talib.SMA(data['close'], timeperiod=10)
+        data['SMA_20'] = talib.SMA(data['close'], timeperiod=20)
+        data['SMA_50'] = talib.SMA(data['close'], timeperiod=50)
+        data['SMA_200'] = talib.SMA(data['close'], timeperiod=200)
         
         # Calculate exponential moving average lines
-        data['EMA_5'] = talib.EMA(data['CLOSE'], timeperiod=5)
-        data['EMA_10'] = talib.EMA(data['CLOSE'], timeperiod=10)
-        data['EMA_20'] = talib.EMA(data['CLOSE'], timeperiod=20)
-        data['EMA_50'] = talib.EMA(data['CLOSE'], timeperiod=50)
+        data['EMA_5'] = talib.EMA(data['close'], timeperiod=5)
+        data['EMA_10'] = talib.EMA(data['close'], timeperiod=10)
+        data['EMA_20'] = talib.EMA(data['close'], timeperiod=20)
+        data['EMA_50'] = talib.EMA(data['close'], timeperiod=50)
         
         # Calculate MACD
-        macd, signal, hist = talib.MACD(data['CLOSE'])
+        macd, signal, hist = talib.MACD(data['close'])
         data['MACD'] = macd
         data['MACD_SIGNAL'] = signal
         data['MACD_HIST'] = hist
         
         # Calculate RSI
-        data['RSI'] = talib.RSI(data['CLOSE'], timeperiod=14)
+        data['RSI'] = talib.RSI(data['close'], timeperiod=14)
         
         # Calculate ADX
-        data['ADX'] = talib.ADX(data['HIGH'], data['LOW'], data['CLOSE'], timeperiod=14)
+        data['ADX'] = talib.ADX(data['high'], data['low'], data['close'], timeperiod=14)
         
         # Calculate Bollinger Bands
-        upper, middle, lower = talib.BBANDS(data['CLOSE'], timeperiod=20)
+        upper, middle, lower = talib.BBANDS(data['close'], timeperiod=20)
         data['BB_UPPER'] = upper
         data['BB_MIDDLE'] = middle
         data['BB_LOWER'] = lower
         
         # Calculate ATR
-        data['ATR'] = talib.ATR(data['HIGH'], data['LOW'], data['CLOSE'], timeperiod=14)
+        data['ATR'] = talib.ATR(data['high'], data['low'], data['close'], timeperiod=14)
         
         # Calculate Donchian Channels
-        data['DONCHIAN_HIGH'] = data['HIGH'].rolling(window=20).max()
-        data['DONCHIAN_LOW'] = data['LOW'].rolling(window=20).min()
+        data['DONCHIAN_HIGH'] = data['high'].rolling(window=20).max()
+        data['DONCHIAN_LOW'] = data['low'].rolling(window=20).min()
         
-        # Calculate ROC
-        data['ROC'] = talib.ROC(data['CLOSE'], timeperiod=10)
+        # Calculate Rate of Change
+        data['ROC'] = talib.ROC(data['close'], timeperiod=10)
         
-        # Calculate volume indicators
-        data['OBV'] = talib.OBV(data['CLOSE'], data['VOLUME'])
+        # Calculate On Balance Volume
+        data['OBV'] = talib.OBV(data['close'], data['volume'])
         
-        # Calculate stochastic indicators
-        slowk, slowd = talib.STOCH(data['HIGH'], data['LOW'], data['CLOSE'])
-        data['STOCH_K'] = slowk
-        data['STOCH_D'] = slowd
+        # Calculate Stochastic Oscillator
+        data['STOCH_K'], data['STOCH_D'] = talib.STOCH(data['high'], data['low'], data['close'])
         
-        # Calculate volatility
-        data['VOLATILITY'] = data['CLOSE'].pct_change().rolling(window=20).std() * np.sqrt(252)
+        # Calculate Volatility
+        data['VOLATILITY'] = data['close'].pct_change().rolling(window=20).std()
         
-        # Calculate price change percentage
-        data['PRICE_CHANGE'] = data['CLOSE'].pct_change()
+        # Calculate Price Change
+        data['PRICE_CHANGE'] = data['close'].pct_change()
         
-        # Calculate volume change
-        data['VOLUME_CHANGE'] = data['VOLUME'].pct_change()
+        # Calculate Volume Change
+        data['VOLUME_CHANGE'] = data['volume'].pct_change()
         
-        # Calculate high-low range
-        data['HIGH_LOW_RANGE'] = (data['HIGH'] - data['LOW']) / data['CLOSE']
+        # Calculate High-Low Range
+        data['HIGH_LOW_RANGE'] = data['high'] - data['low']
         
-        # Calculate closing price relative position
-        data['CLOSE_POSITION'] = (data['CLOSE'] - data['BB_LOWER']) / (data['BB_UPPER'] - data['BB_LOWER'])
+        # Add position column
+        data['CLOSE_POSITION'] = 0
         
-        # Drop rows containing NaN
-        data = data.dropna()
-        
-        logger.info("Technical indicators calculated")
+        logger.info("Technical indicators calculated successfully")
+        logger.info(f"Final data columns: {data.columns.tolist()}")
         return data
         
     except Exception as e:
-        logger.error(f"Error calculating technical indicators: {str(e)}")
+        logger.error(f"Error calculating indicators: {str(e)}")
+        logger.error(f"Data columns: {data.columns.tolist()}")
+        logger.error(f"Data shape: {data.shape}")
         return None 
