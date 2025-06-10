@@ -55,7 +55,6 @@ backtest_data/
 *.csv
 *.xlsx
 *.xls
-*.json
 *.pkl
 *.h5
 
@@ -115,7 +114,3 @@ frontend/out/
 *.temp
 *.bak
 *.backup
-
-# Project specific
-*.whl
-ta_lib-*.whl 

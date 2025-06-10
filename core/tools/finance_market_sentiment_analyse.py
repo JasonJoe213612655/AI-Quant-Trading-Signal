@@ -15,7 +15,7 @@ from langchain.schema import Document
 from langchain.text_splitter import RecursiveCharacterTextSplitter
 from langchain.vectorstores import FAISS
 from langchain.embeddings import OpenAIEmbeddings
-from langchain.agents import tool
+from langchain_core.tools import tool
 
 # Load environment variables
 load_dotenv()
@@ -187,16 +187,10 @@ class SentimentAgent:
             return {
                 "error": str(e)
             }
-    @tool("根据用户请求的资产代码，获取相关新闻，并分析市场情绪，最终返回包含市场情绪分析结果的JSON格式的市场情绪分析报告")            
+    @tool("analyze_market_sentiment")            
     def analyze_market_sentiment(self, symbol: str) -> Dict[str, Any]:
         """
-        Analyze market sentiment
-        
-        Args:
-            symbol: Asset code
-            
-        Returns:
-            Market sentiment analysis result
+        Analyze market sentiment based on news content of a specific asset
         """
         try:
             logger.info(f"Starting to analyze market sentiment for {symbol}")

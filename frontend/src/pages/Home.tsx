@@ -8,16 +8,23 @@ const Home: React.FC = () => {
   const navigate = useNavigate();
 
   return (
-    <div style={{ padding: '24px' }}>
+    <div style={{ 
+      padding: '24px',
+      minHeight: '100vh',
+      background: '#0a0f1a',
+      position: 'relative',
+      zIndex: 1
+    }}>
       <Row gutter={[24, 24]}>
         <Col span={24}>
-          <Card style={{ background: '#1a1a1a', border: 'none' }}>
-            <Title level={2} style={{ color: '#fff', textAlign: 'center' }}>
-            Welcome to the AI ​​Quantitative Trading Signal System
+          <Card style={{ 
+            background: '#1a2b3c', 
+            border: 'none',
+            backdropFilter: 'blur(10px)'
+          }}>
+            <Title level={1} style={{ color: '#fff', textAlign: 'center' }}>
+              JPMorgan Chase
             </Title>
-            <Paragraph style={{ color: '#fff', textAlign: 'center' }}>
-            This system uses advanced artificial intelligence technology to provide you with professional quantitative trading signal services
-            </Paragraph>
           </Card>
         </Col>
 
@@ -113,7 +120,7 @@ const Home: React.FC = () => {
               textShadow: '0 0 10px rgba(255, 215, 0, 0.5)',
               animation: 'titleGlow 2s infinite'
             }}>
-              Intelligent Quantitative Trading
+              AI Quant Trading Analysis
             </div>
           </Card>
         </Col>
@@ -136,16 +143,16 @@ const Home: React.FC = () => {
                 onClick={() => navigate('/trading')}
                 hoverable
               >
-                <Title level={3} style={{ color: '#fff' }}>Trading Signal</Title>
+                <Title level={3} style={{ color: '#fff' }}>AI Quant Trading Analyse</Title>
                 <Paragraph style={{ color: '#fff', textAlign: 'center' }}>
-                  Select asset type, input trading pair, generate professional trading signals
+                  Select asset type, input trading pair, generate professional trading analysis by AI
                 </Paragraph>
                 <Button 
                   type="primary" 
                   size="large"
                   style={{ marginTop: '20px' }}
                 >
-                  Start Trading
+                  Start Analyse
                 </Button>
               </Card>
             </Col>
@@ -165,9 +172,9 @@ const Home: React.FC = () => {
                 onClick={() => navigate('/report')}
                 hoverable
               >
-                <Title level={3} style={{ color: '#fff' }}>Trading Report</Title>
+                <Title level={3} style={{ color: '#fff' }}>Quant AI Analysis Report</Title>
                 <Paragraph style={{ color: '#fff', textAlign: 'center' }}>
-                  View historical trading records, analyze trading performance, optimize trading strategies
+                  View historical trading records, analyze trading performance, optimize trading strategies by AI
                 </Paragraph>
                 <Button 
                   type="primary" 

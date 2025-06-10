@@ -30,14 +30,11 @@ def analyze():
         initial_state = WorkflowState(
             messages=[],
             symbol=symbol,
-            historical_data=None,
-            technical_data=None,
             trading_strategy=None,
-            backtest_results=None,
-            backtest_evaluation={"is_satisfactory": False},
+            quant_analysis_results=None,
             sentiment_analysis=None,
-            final_report="",
-            live_signal=None
+            final_report=None,
+            strategy_attempts=0
         )
         
         # Run workflow
@@ -62,10 +59,6 @@ def analyze():
         return jsonify({
             'status': 'success',
             'data': {
-                'backtest_results': safe(final_state.get('backtest_results')),
-                'backtest_evaluation': safe(final_state.get('backtest_evaluation')),
-                'live_signal': safe(final_state.get('live_signal')),
-                'sentiment_analysis': safe(final_state.get('sentiment_analysis')),
                 'final_report': safe(final_state.get('final_report'))
             }
         })
