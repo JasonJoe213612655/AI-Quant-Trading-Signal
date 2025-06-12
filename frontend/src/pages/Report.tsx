@@ -141,7 +141,7 @@ const Report: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              J.P.Morgan Financial Advisor AI Powered Report
+              ChaseQuant AI Trader
             </h2>
           </div>
           {/* Optional: Add an icon or illustration */}
@@ -1026,7 +1026,7 @@ const Report: React.FC = () => {
             lineHeight: 1.2,
           }}
         >
-          JPMorgan's AI Powered - Trading Report
+          ChaseQuant AI Trader Report
         </h2>
       </div>
 

@@ -28,7 +28,8 @@ const Home: React.FC = () => {
         background: JPM_GRADIENT,
         position: "relative",
         zIndex: 1,
-      }}    >
+      }}
+    >
       <Row gutter={[32, 32]}>
         <Col span={24}>
           <Card
@@ -51,7 +52,7 @@ const Home: React.FC = () => {
                 marginBottom: 0,
               }}
             >
-              J.P.Morgan & Chase Quantitative Trading Platform
+              ChaseQuant AI Trader
             </Title>
             <Paragraph
               style={{
@@ -62,7 +63,7 @@ const Home: React.FC = () => {
                 opacity: 0.9,
               }}
             >
-              Empowering Institutional Trading with AI-driven Insights
+              Empowering JPMorgan Institutional Trading with AI-driven Insights
             </Paragraph>
           </Card>
         </Col>
@@ -73,7 +74,7 @@ const Home: React.FC = () => {
               background: "#fff",
               border: "none",
               borderRadius: 18,
-              height: 130,
+              height: 420,
               overflow: "hidden",
               position: "relative",
               boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
@@ -197,7 +198,7 @@ const Home: React.FC = () => {
                 letterSpacing: 1,
               }}
             >
-              AI Quant Trading Analysis
+              AI Powered Trade Advisor by Chase
             </div>
           </Card>
         </Col>
@@ -223,7 +224,7 @@ const Home: React.FC = () => {
                 onClick={() => navigate("/trading")}
               >
                 <Title level={3} style={{ color: GOLD, marginBottom: 8 }}>
-                  AI Quant Trading Analysis
+                  Chase Quant Trading Analysis
                 </Title>
                 <Paragraph
                   style={{ color: "#fff", textAlign: "center", fontSize: 16 }}
@@ -451,10 +452,10 @@ const Home: React.FC = () => {
             50% { text-shadow: 0 0 24px ${GOLD}; }
             100% { text-shadow: 0 0 10px ${GOLD}; }
           }
-          .ant-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 24px ${GOLD}33;
-          }
+          // .ant-card:hover {
+          //   transform: translateY(-5px);
+          //   box-shadow: 0 8px 24px ${GOLD}33;
+          // }
         `}
       </style>
     </div>

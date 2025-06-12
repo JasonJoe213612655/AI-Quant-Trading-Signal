@@ -256,7 +256,7 @@ const Trading: React.FC = () => {
                 color: "#1976d2",
               }}
             >
-              J.P.Morgan Financial Advisor Analysis
+              ChaseQuant AI Trader
             </span>
           </div>
         }
