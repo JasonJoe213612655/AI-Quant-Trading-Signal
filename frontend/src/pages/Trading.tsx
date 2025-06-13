@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   Card,
   Input,
@@ -52,6 +52,10 @@ const Trading: React.FC = () => {
   const [symbol, setSymbol] = useState<string>("");
   const [showAssetList, setShowAssetList] = useState<boolean>(false);
   const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
 
   const assetTypes = [
     { value: "stock", label: "Global Stock" },

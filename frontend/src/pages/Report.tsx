@@ -15,6 +15,10 @@ const Report: React.FC = () => {
   const location = useLocation();
   const [isBackHovered, setIsBackHovered] = useState(false);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   /****************** Mock Data Setup *************************** */
 
   /*const [reportHistory, setReportHistory] =
@@ -100,7 +104,7 @@ const Report: React.FC = () => {
             }}
           >
             <button
-              onClick={() => navigate("/")}
+              onClick={() => navigate("/trading")}
               onMouseEnter={() => setIsBackHovered(true)}
               onMouseLeave={() => setIsBackHovered(false)}
               style={{
@@ -984,7 +988,7 @@ const Report: React.FC = () => {
         }}
       >
         <button
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/trading")}
           onMouseEnter={() => setIsBackHovered(true)}
           onMouseLeave={() => setIsBackHovered(false)}
           style={{

@@ -27,7 +27,8 @@ const Layout: React.FC = () => {
           display: "flex",
           alignItems: "center",
         }}
-      >        <div
+      >
+        <div
           style={{
             marginRight: 32,
             flex: "none",
@@ -57,8 +58,12 @@ const Layout: React.FC = () => {
             fontSize: 16,
             flex: 1,
             minWidth: 0,
-          }}        />        {/* Investments by text and JP Morgan Logo - Top Right of Navigation */}
-        <div style={{ display: "flex", alignItems: "center", marginLeft: "20px" }}>
+          }}
+        />
+        {/* Investments by text and JP Morgan Logo - Top Right of Navigation */}
+        <div
+          style={{ display: "flex", alignItems: "center", marginLeft: "20px" }}
+        >
           <span
             style={{
               color: "#fff",
@@ -70,7 +75,8 @@ const Layout: React.FC = () => {
             }}
           >
             Investments by
-          </span>          <img
+          </span>
+          <img
             src="/jp-morgan-mozaic-ii-index.png"
             alt="JP Morgan Logo"
             style={{

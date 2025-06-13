@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Card, Typography, Row, Col, Button } from "antd";
 import { useNavigate } from "react-router-dom";
 
@@ -20,6 +20,11 @@ const gridBgColors = [
 
 const Home: React.FC = () => {
   const navigate = useNavigate();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   return (
     <div
       style={{
@@ -30,7 +35,7 @@ const Home: React.FC = () => {
         zIndex: 1,
       }}
     >
-      <Row gutter={[32, 32]}>
+      <Row gutter={[32, 22]}>
         <Col span={24}>
           <Card
             style={{
@@ -74,7 +79,7 @@ const Home: React.FC = () => {
               background: "#fff",
               border: "none",
               borderRadius: 18,
-              height: 420,
+              height: "45vh",
               overflow: "hidden",
               position: "relative",
               boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
@@ -306,7 +311,7 @@ const Home: React.FC = () => {
             bodyStyle={{ padding: "32px 24px" }}
           >
             <Title level={3} style={{ color: JPM_BLUE, marginBottom: 24 }}>
-              Main Functions
+              Supported Functionality & Future Scope
             </Title>
             <Row gutter={[24, 24]}>
               <Col xs={24} md={6}>
@@ -328,11 +333,14 @@ const Home: React.FC = () => {
                   }}
                 >
                   <Title level={4} style={{ color: JPM_BLUE }}>
-                    Select Asset Type
+                    Global Asset Class
                   </Title>
                   <Paragraph style={{ color: JPM_BLUE }}>
-                    Support a variety of asset types such as global stocks,
-                    ETFs, foreign exchange, and cryptocurrencies
+                    Seamlessly access a wide range of global assets - including
+                    stocks, ETFs, forex, <b>JPM Coin</b> & cryptocurrencies —
+                    all within the trusted Chase ecosystem. Empower your
+                    institutional trading with the security and innovation of
+                    JPMorgan.
                   </Paragraph>
                 </Card>
               </Col>
@@ -355,11 +363,15 @@ const Home: React.FC = () => {
                   }}
                 >
                   <Title level={4} style={{ color: JPM_BLUE }}>
-                    View Reference List
+                    Chase AI Analyst Report
                   </Title>
                   <Paragraph style={{ color: JPM_BLUE }}>
-                    Provide a rich asset code reference, convenient for quick
-                    selection
+                    <Paragraph style={{ color: JPM_BLUE }}>
+                      Instantly generate professional trading reports powered by
+                      advanced AI analysis—delivering actionable insights and
+                      strategic recommendations, all within the trusted Chase
+                      platform.
+                    </Paragraph>
                   </Paragraph>
                 </Card>
               </Col>
@@ -382,11 +394,13 @@ const Home: React.FC = () => {
                   }}
                 >
                   <Title level={4} style={{ color: JPM_BLUE }}>
-                    Input Trading Pair
+                    Chase App Integration
                   </Title>
                   <Paragraph style={{ color: JPM_BLUE }}>
-                    Support a variety of trading pair formats to meet different
-                    market needs
+                    Seamlessly integrates with Chase’s suite of knowledgeable
+                    applications enabling unified access to trading insights,
+                    portfolio management, and financial tools within the trusted
+                    Chase ecosystem.
                   </Paragraph>
                 </Card>
               </Col>
@@ -409,11 +423,13 @@ const Home: React.FC = () => {
                   }}
                 >
                   <Title level={4} style={{ color: JPM_BLUE }}>
-                    Generate Trading Report
+                    Top 100 Asset Rankings by Chase
                   </Title>
                   <Paragraph style={{ color: JPM_BLUE }}>
-                    Generate professional trading suggestion reports based on AI
-                    analysis
+                    Instantly view and explore the top 100 most traded assets
+                    across global markets—helping you identify trending
+                    opportunities and make informed decisions, all within the
+                    secure Chase platform.
                   </Paragraph>
                 </Card>
               </Col>
