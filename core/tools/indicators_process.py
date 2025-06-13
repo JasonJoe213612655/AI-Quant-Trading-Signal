@@ -20,7 +20,7 @@ def get_historical_data(symbol: str) -> Optional[pd.DataFrame]:
     try:
         # Set default date range
         end_date = datetime.now().strftime('%Y-%m-%d')
-        start_date = (datetime.now() - timedelta(days=365)).strftime('%Y-%m-%d')
+        start_date = (datetime.now() - timedelta(days=365*3)).strftime('%Y-%m-%d')
             
         # Get historical data
         ticker = yf.Ticker(symbol)
