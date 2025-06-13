@@ -141,7 +141,7 @@ const Report: React.FC = () => {
                 textAlign: "center",
               }}
             >
-              ChaseQuant AI Trader
+              ChaseQuant AI Analyst
             </h2>
           </div>
           {/* Optional: Add an icon or illustration */}
@@ -1026,7 +1026,7 @@ const Report: React.FC = () => {
             lineHeight: 1.2,
           }}
         >
-          ChaseQuant AI Trader Report
+          ChaseQuant AI Analyst - Insights
         </h2>
       </div>
 

@@ -52,7 +52,7 @@ const Home: React.FC = () => {
                 marginBottom: 0,
               }}
             >
-              ChaseQuant AI Trader
+              ChaseQuant AI Analyst
             </Title>
             <Paragraph
               style={{
@@ -198,7 +198,7 @@ const Home: React.FC = () => {
                 letterSpacing: 1,
               }}
             >
-              AI Powered Trade Advisor by Chase
+              AI Powered Trade Analyst by Chase
             </div>
           </Card>
         </Col>

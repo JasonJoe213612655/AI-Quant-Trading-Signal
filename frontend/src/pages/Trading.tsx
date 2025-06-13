@@ -256,19 +256,48 @@ const Trading: React.FC = () => {
                 color: "#1976d2",
               }}
             >
-              ChaseQuant AI Trader
+              ChaseQuant AI Analyst
             </span>
           </div>
         }
       >
-        <div style={{ marginBottom: 24 }}>
-          <Title level={4} style={{ color: JPM_BLUE, marginBottom: 8 }}>
-            Select Asset Type
-          </Title>
+        <div
+          style={{
+            background: "#f8fbff",
+            borderRadius: 14,
+            padding: "28px 24px",
+            marginBottom: 24,
+            boxShadow: "0 2px 12px #e3eafc",
+            border: "1px solid #e3eafc",
+            maxWidth: "75vw", // <-- extended width
+            margin: "0 auto 24px auto",
+            minWidth: 340,
+          }}
+        >
+          <div
+            style={{ display: "flex", alignItems: "center", marginBottom: 14 }}
+          >
+            <ThunderboltOutlined
+              style={{ color: GOLD, fontSize: 28, marginRight: 12 }}
+            />
+            <Title
+              level={4}
+              style={{
+                color: JPM_BLUE,
+                margin: 0,
+                fontWeight: 700,
+                fontSize: 22,
+                letterSpacing: 1,
+              }}
+            >
+              Asset Type
+            </Title>
+          </div>
+
           <Radio.Group
             value={assetType}
             onChange={(e) => handleAssetTypeChange(e.target.value)}
-            style={{ width: "100%", marginBottom: 16 }}
+            style={{ width: "100%", marginBottom: 0 }}
           >
             <Space direction="vertical" style={{ width: "100%" }}>
               {assetTypes.map((type) => (
@@ -279,12 +308,22 @@ const Trading: React.FC = () => {
                     width: "100%",
                     textAlign: "center",
                     height: "44px",
-                    marginBottom: "8px",
+                    marginBottom: "10px",
                     background:
                       assetType === type.value ? JPM_GRADIENT : "#f6f9fb",
                     color: assetType === type.value ? "#fff" : JPM_BLUE,
-                    fontWeight: 600,
-                    border: "none",
+                    fontWeight: 700,
+                    fontSize: 17,
+                    border: `2px solid ${
+                      assetType === type.value ? GOLD : "#e3eafc"
+                    }`, // <-- border for each item
+                    boxShadow:
+                      assetType === type.value ? "0 2px 8px #FFD70033" : "none",
+                    transition: "all 0.2s",
+                    borderRadius: 8,
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
                   }}
                 >
                   {type.label}
@@ -293,9 +332,27 @@ const Trading: React.FC = () => {
             </Space>
           </Radio.Group>
 
-          <Title level={4} style={{ color: JPM_BLUE, marginBottom: 8 }}>
-            Asset Code
-          </Title>
+          <br />
+          <br />
+          <div
+            style={{ display: "flex", alignItems: "center", marginBottom: 14 }}
+          >
+            <ThunderboltOutlined
+              style={{ color: GOLD, fontSize: 28, marginRight: 12 }}
+            />
+            <Title
+              level={4}
+              style={{
+                color: JPM_BLUE,
+                margin: 0,
+                fontWeight: 700,
+                fontSize: 22,
+                letterSpacing: 1,
+              }}
+            >
+              Asset Code
+            </Title>
+          </div>
           <Input
             style={{ width: "100%", marginBottom: 16, marginTop: 8 }}
             placeholder="For example: BTC-USD, AAPL, EURUSD=X"
@@ -304,9 +361,14 @@ const Trading: React.FC = () => {
           />
           {showAssetList && assetType && (
             <div
-              style={{ marginBottom: 16, maxHeight: 220, overflowY: "auto" }}
+              style={{
+                marginBottom: 16,
+                maxHeight: 220,
+                overflowY: "auto",
+                scrollbarWidth: "none", // For Firefox
+                msOverflowStyle: "none", // For IE/Edge
+              }}
             >
-              <Text style={{ color: JPM_BLUE }}>Asset reference list:</Text>
               <List
                 grid={{ gutter: 12, column: 4 }}
                 dataSource={assetLists[assetType as keyof typeof assetLists]}
@@ -321,7 +383,7 @@ const Trading: React.FC = () => {
                         borderRadius: 8,
                         background: symbol === item ? JPM_GRADIENT : "#f6f9fb",
                         color: symbol === item ? "#fff" : JPM_BLUE,
-                        fontWeight: 500,
+                        fontWeight: 600,
                         border: "none",
                       }}
                     >
