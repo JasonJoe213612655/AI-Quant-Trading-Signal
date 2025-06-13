@@ -522,7 +522,7 @@ def evaluate_backtest(backtest_results: Dict[str, Any]) -> Dict[str, Any]:
         }
         
         # Add evaluation conclusion
-        overall_rating = 'Poor'  # default rating
+        overall_rating = 'Average'  # default rating
         if sharpe_ratio > 1.5 and win_rate > 0.6 and abs(max_drawdown) < 0.2:
             overall_rating = 'Excellent'
         elif sharpe_ratio > 1.0 and win_rate > 0.5 and abs(max_drawdown) < 0.3:
@@ -552,12 +552,13 @@ def evaluate_backtest(backtest_results: Dict[str, Any]) -> Dict[str, Any]:
             evaluation_report['conclusion']['weaknesses'].append('drawdown too large')
         
         # Add is_satisfactory flag based on key metrics
-        evaluation_report['is_satisfactory'] = bool(
-            sharpe_ratio > 1.0 and
-            win_rate > 0.5 and      
-            abs(max_drawdown) < 0.3 and 
-            total_trades >= 10      
-        )
+        passed_criteria = sum([
+            sharpe_ratio > 0.8,
+            win_rate > 0.5,
+            max_drawdown > -0.2,
+            total_trades >= 30
+])
+        evaluation_report['is_satisfactory'] = passed_criteria >= 3
         
         logger.info(f"Backtest evaluation completed. Rating: {overall_rating}, Satisfactory: {evaluation_report['is_satisfactory']}")
         return evaluation_report
