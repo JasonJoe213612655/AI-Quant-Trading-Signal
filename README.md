@@ -19,7 +19,7 @@ This is a Python-based quantitative trading signal system built using the LangCh
 1. Install dependency packages:
 
     ```bash
-    pip install -r requirements.txt
+    python -m pip install -r requirements.txt
     ```
 
 2. Create a `.env` file:
