@@ -38,3 +38,4 @@ def test_all_strategies():
 
 if __name__ == "__main__":
     test_all_strategies() 
+    # 运行命令: python test_all_strategies.py
