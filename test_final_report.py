@@ -73,3 +73,5 @@ def test_simplified_final_report():
 
 if __name__ == "__main__":
     test_simplified_final_report() 
+    #
+    # 备注：完整的最终报告测试因依赖外部API，可能产生额外费用，故此处不执行
